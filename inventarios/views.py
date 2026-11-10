@@ -67,7 +67,7 @@ def especie_eliminar(request, pk):
     return render(request, 'especies/especie_confirm_delete.html', {'especie': especie})
 
 #funciones de inventario
-rol_requerido('ADMIN', 'RESPONSABLE','VOLUNTARIO')
+@rol_requerido('ADMIN', 'RESPONSABLE','VOLUNTARIO')
 def inventario_list(view_request):
     """Vista para listar los inventarios existentes con sus relaciones."""
     inventarios = Inventario.objects.all()

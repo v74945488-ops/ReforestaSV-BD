@@ -110,3 +110,32 @@ python -m venv .venv
 5.Instalar las dependencias
 pip install -r requeriments.txt
 
+## Cómo ejecutar el proyecto
+
+Requisitos: Python 3.12 o superior, SQL Server con SSMS y ODBC Driver 17 for SQL Server.
+
+1. Clonar el repositorio y entrar a la carpeta del proyecto.
+2. Crear la base de datos: abrir `docs/ReforestaSVDB.sql` en SSMS y ejecutarlo completo **una sola vez**.
+3. Crear el entorno virtual e instalar dependencias:
+   ```
+   python -m venv venv
+   venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+4. Copiar `.env.example` como `.env` y poner el nombre de su servidor en `DB_HOST`
+   (se ve en SSMS al conectarse, por ejemplo `localhost` o `DESKTOP-XXXX\SQLEXPRESS`).
+5. Preparar las migraciones (las tablas del proyecto ya las crea el script SQL):
+   ```
+   python manage.py migrate auth
+   python manage.py migrate admin
+   python manage.py migrate sessions
+   python manage.py migrate --fake
+   ```
+6. Crear su usuario de acceso, usando el correo `admin@reforestasv.org`:
+   ```
+   python manage.py createsuperuser
+   ```
+7. Iniciar el servidor: `python manage.py runserver`
+
+Nota: la conexión usa autenticación de Windows. Quien entre a SQL Server con usuario y contraseña
+debe llenar `DB_USER` y `DB_PASSWORD` en su `.env` y quitar `Trusted_Connection=yes` de `config/settings.py` en su copia local.

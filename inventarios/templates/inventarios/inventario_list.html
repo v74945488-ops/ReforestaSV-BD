@@ -146,7 +146,7 @@
                     <!-- Columna de Información y Funciones del Modelo -->
                     <div class="col-md-6">
                         <h6 class="text-success fw-bold border-bottom pb-1">Información General</h6>
-                        <p class="mb-1"><strong>Campaña:</strong> {{ item.campania.titulo }} <span class="text-muted small">({{ item.campania.duracion_dias }} días)</span></p>
+                        <p class="mb-1"><strong>Campaña:</strong> {{ item.campania.titulo }} <span class="text-muted small">{% if item.campania.duracion_dias %}({{ item.campania.duracion_dias }} días){% else %}(sin fecha de fin){% endif %}</span>
                         <p class="mb-1"><strong>Zona:</strong> {{ item.ubicacion.zona }}</p>
                         <p class="mb-1"><strong>Dirección:</strong> {{ item.ubicacion.ubicacion }}</p>
                         <p class="mb-1"><strong>Responsable / Usuario:</strong> {{ item.usuario.nombre }}</p>
@@ -171,8 +171,8 @@
                     <!-- Columna de Imagen Responsiva -->
                     <div class="col-md-6 text-center">
                         <h6 class="text-success fw-bold mb-2">Evidencia Fotográfica</h6>
-                        {% if item.imagen %}
-                            <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.especie.nombre }}" class="img-fluid rounded shadow-sm border" style="max-height: 260px; object-fit: cover; width: 100%;">
+                        {% if item.img_url %}
+                            <img src="{{ item.img_url }}" alt="Imagen de {{ item.especie.nombre }}" class="img-fluid rounded shadow-sm border" style="max-height: 260px; object-fit: cover; width: 100%;">
                         {% else %}
                             <div class="p-4 bg-light rounded text-muted border">
                                 <i class="bi bi-image fs-1 mb-2"></i>

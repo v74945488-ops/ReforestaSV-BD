@@ -29,7 +29,7 @@
                             <td>
                                 {% if campania.responsable %}
                                     <span class="badge bg-light text-dark border">
-                                        {{ campania.responsable.nombre|default:campania.responsable.username }}
+                                        {{ campania.responsable.nombre|default:campania.responsable.nombre }}
                                     </span>
                                 {% else %}
                                     <span class="text-muted">Sin asignar</span>

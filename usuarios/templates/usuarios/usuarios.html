@@ -28,7 +28,7 @@
     <thead class="table-success">
         <tr>
             <th>#</th>
-            <th>Username</th>
+            
             <th>Localidad</th>
             <th>Institucion</th>
             <th>Telefono</th>
@@ -42,11 +42,11 @@
         
         <tr>
             <td>{{ u.id }}</td>
-            <td>{{ u.username }}</td>
+            <td>{{ u.correo|default:"-" }}</td>
             <td>{{ u.localidad|default:"N/A" }}</td>
             <td>{{ u.institucion|default:"N/A" }}</td>
             <td>{{ u.telefono }}</td>
-            <td>{{ u.email }}</td>
+            <td>{{ u.correo|default:"-" }}</td>
             <td>{{ u.get_rol_display|default:u.rol }}</td>
             <td>
                 <!-- Ajustado a la variable u.id de usuarios -->

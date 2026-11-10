@@ -6,13 +6,19 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header bg-success text-white">
-                    <h4 class="mb-0">Registro de Nuevo Inventario</h4>
+                    <h4 class="mb-0">{% if editando %}Editar Inventario{% else %}Registro de Nuevo Inventario{% endif %}</h4>
                 </div>
                 <div class="card-body">
-                     <form method="POST"></form>
+                    <form method="POST">
                         {% csrf_token %}
-                        
-                        {{ form.non_field_errors }}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
 
                         {% for field in form %}
                             <div class="mb-3">

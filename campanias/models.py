@@ -66,3 +66,9 @@ class Campania(models.Model):
             return None
         diferencia = (self.fecha_fin - self.fecha_inicio).days
         return diferencia + 1 if diferencia > 0 else 1
+
+    @property
+    def esta_activa(self):
+        """Activa si ya empezó y no ha terminado (o no tiene fecha de fin)."""
+        hoy = timezone.localdate()
+        return self.fecha_inicio <= hoy and (self.fecha_fin is None or hoy <= self.fecha_fin)
