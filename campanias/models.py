@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.core.validators import MinValueValidator
 
 class Ubicacion(models.Model):
     zona = models.CharField(max_length=150)
@@ -35,8 +36,9 @@ class Campania(models.Model):
     )
         
     
+    meta_arboles = models.IntegerField(validators=[MinValueValidator(1)])
     fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
+    fecha_fin = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = 'campanias'
@@ -57,11 +59,10 @@ class Campania(models.Model):
         ids_usuarios = self.inventarios.values_list('usuario_id', flat=True).distinct()
         return Usuario.objects.filter(id__in=ids_usuarios)
 
+    
     def duracion_dias(self):
-        """Calcula la duración total de la campaña en días."""
+        """Duración total de la campaña en días (None si aún no tiene fecha de fin)."""
+        if not self.fecha_fin:
+            return None
         diferencia = (self.fecha_fin - self.fecha_inicio).days
-        
-        # Si inicia y termina el mismo día, cuenta como 1 día. De lo contrario, sumamos 1 para incluir el día de inicio.
-        if diferencia == 0:
-            return 1
         return diferencia + 1 if diferencia > 0 else 1

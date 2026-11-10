@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 
 class Especie(models.Model):
     nombre = models.CharField(max_length=100)
@@ -33,14 +34,14 @@ class Inventario(models.Model):
         db_column='especie_id',
         related_name='inventarios'
     )
-    cantidad = models.IntegerField()
+    cantidad = models.IntegerField(validators=[MinValueValidator(1)])
     campania = models.ForeignKey(
         'campanias.Campania',
         on_delete=models.CASCADE,
         db_column='campania_id',
         related_name='inventarios'
     )
-    imagen = models.ImageField(upload_to='inventarios_imgs/', blank=True, null=True)
+    img_url = models.URLField(max_length=250, blank=True, null=True)
     ubicacion = models.ForeignKey(
         'campanias.Ubicacion',
        on_delete=models.PROTECT,
@@ -53,7 +54,22 @@ class Inventario(models.Model):
         db_column='usuario_id',
         related_name='inventarios_asignados'
     )
-
+    ESTADOS_APROBACION = [
+        ('PENDIENTE', 'Pendiente'),
+        ('APROBADO', 'Aprobado'),
+        ('RECHAZADO', 'Rechazado'),
+    ]
+    estado_aprobacion = models.CharField(
+        max_length=20, choices=ESTADOS_APROBACION, default='PENDIENTE'
+    )
+    aprobado_por = models.ForeignKey(
+        'usuarios.Usuario',
+        on_delete=models.PROTECT,
+        null=True, blank=True,
+        db_column='aprobado_por',
+        related_name='inventarios_aprobados'
+    )
+    fecha_aprobacion = models.DateTimeField(null=True, blank=True)
     class Meta:
         db_table = 'inventarios'
 
