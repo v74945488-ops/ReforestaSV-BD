@@ -1,16 +1,15 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Admin, Responsable, Usuario, Voluntario
 
-from .models import Usuario, Admin,Voluntario,Responsable
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display=('username','nombre','rol','email','telefono')
-    list_filter = ('rol',)
-    search_fields = ('username','nombre','email')
+    list_display = ('nombre', 'rol', 'correo', 'telefono', 'activo')
+    list_filter = ('rol', 'activo')
+    search_fields = ('nombre', 'correo')
 
-    admin.site.register(Admin)
-    admin.site.register(Voluntario)
-    admin.site.register(Responsable)
 
+admin.site.register(Admin)
+admin.site.register(Voluntario)
+admin.site.register(Responsable)

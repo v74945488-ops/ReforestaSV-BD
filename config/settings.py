@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'inventarios',
     'usuarios'
 ]
-AUTH_USER_MODEL = 'usuarios.Usuario'
+'usuarios.middleware.UsuarioMiddleware',
 LOGIN_URL = 'login'
 # URL a la que se redirige automáticamente al iniciar sesión correctamente
 LOGIN_REDIRECT_URL = 'inventarios:inventario_list'
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'usuarios.middleware.UsuarioMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

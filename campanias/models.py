@@ -28,12 +28,13 @@ class Campania(models.Model):
     descripcion = models.CharField(max_length=200, blank=True, null=True)
     #la variable debe de tener relacion con db_colum
     responsable = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        'usuarios.Usuario',
         on_delete=models.CASCADE,
         db_column='responsable_id',
         related_name='campanias'
-        
     )
+        
+    
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
 
@@ -47,15 +48,14 @@ class Campania(models.Model):
 
     def obtener_participantes(self):
         """
-        Obtiene la lista de todos los Usuarios (voluntarios o responsables) 
+        Obtiene la lista de todos los Usuarios (voluntarios o responsables)
         que tienen lotes de inventario asignados dentro de esta campaña.
         """
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
+        from usuarios.models import Usuario
 
-        # Obtiene los IDs únicos de la columna usuario_id en la tabla inventarios
+        # IDs únicos de la columna usuario_id en la tabla inventarios
         ids_usuarios = self.inventarios.values_list('usuario_id', flat=True).distinct()
-        return User.objects.filter(id__in=ids_usuarios)
+        return Usuario.objects.filter(id__in=ids_usuarios)
 
     def duracion_dias(self):
         """Calcula la duración total de la campaña en días."""
