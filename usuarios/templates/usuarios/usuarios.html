@@ -35,6 +35,8 @@
             <th>Email</th>
             <th>ROL</th>
             <th>Acciones</th>
+            <th>Nombre</th>
+
         </tr>
     </thead>
     <tbody>
@@ -42,7 +44,7 @@
         
         <tr>
             <td>{{ u.id }}</td>
-            <td>{{ u.correo|default:"-" }}</td>
+            <td>{{ u.nombre }}</td>
             <td>{{ u.localidad|default:"N/A" }}</td>
             <td>{{ u.institucion|default:"N/A" }}</td>
             <td>{{ u.telefono }}</td>
